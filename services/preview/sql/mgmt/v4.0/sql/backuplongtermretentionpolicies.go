@@ -8,10 +8,11 @@ package sql
 
 import (
 	"context"
+	"net/http"
+
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
-	"net/http"
 )
 
 // BackupLongTermRetentionPoliciesClient is the the Azure SQL Database management API provides a RESTful set of web
