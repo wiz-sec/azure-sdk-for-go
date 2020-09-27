@@ -287,7 +287,7 @@ func (client AssessmentsClient) GetResponder(resp *http.Response) (result Assess
 // Parameters:
 // scope - scope of the query, can be subscription (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or
 // management group (/providers/Microsoft.Management/managementGroups/mgName).
-func (client AssessmentsClient) List(ctx context.Context, scope string) (result AssessmentListPage, err error) {
+func (client AssessmentsClient) List(ctx context.Context, scope string, expand ExpandEnum) (result AssessmentListPage, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/AssessmentsClient.List")
 		defer func() {
@@ -299,7 +299,7 @@ func (client AssessmentsClient) List(ctx context.Context, scope string) (result 
 		}()
 	}
 	result.fn = client.listNextResults
-	req, err := client.ListPreparer(ctx, scope)
+	req, err := client.ListPreparer(ctx, scope, expand)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "security.AssessmentsClient", "List", nil, "Failure preparing request")
 		return
@@ -326,7 +326,7 @@ func (client AssessmentsClient) List(ctx context.Context, scope string) (result 
 }
 
 // ListPreparer prepares the List request.
-func (client AssessmentsClient) ListPreparer(ctx context.Context, scope string) (*http.Request, error) {
+func (client AssessmentsClient) ListPreparer(ctx context.Context, scope string, expand ExpandEnum) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"scope": scope,
 	}
@@ -334,6 +334,10 @@ func (client AssessmentsClient) ListPreparer(ctx context.Context, scope string) 
 	const APIVersion = "2020-01-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
+	}
+
+	if len(string(expand)) > 0 {
+		queryParameters["$expand"] = autorest.Encode("query", expand)
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -384,7 +388,7 @@ func (client AssessmentsClient) listNextResults(ctx context.Context, lastResults
 }
 
 // ListComplete enumerates all values, automatically crossing page boundaries as required.
-func (client AssessmentsClient) ListComplete(ctx context.Context, scope string) (result AssessmentListIterator, err error) {
+func (client AssessmentsClient) ListComplete(ctx context.Context, scope string, expand ExpandEnum) (result AssessmentListIterator, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/AssessmentsClient.List")
 		defer func() {
@@ -395,6 +399,6 @@ func (client AssessmentsClient) ListComplete(ctx context.Context, scope string) 
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	result.page, err = client.List(ctx, scope)
+	result.page, err = client.List(ctx, scope, expand)
 	return
 }
