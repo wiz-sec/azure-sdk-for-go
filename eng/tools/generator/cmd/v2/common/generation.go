@@ -90,7 +90,6 @@ func (ctx GenerateContext) GenerateForSingleRPNamespace(generateParam *GenerateP
 	changelogPath := filepath.Join(packagePath, common.ChangelogFilename)
 
 	onBoard := false
-	var oriExports exports.Content
 	if _, err := os.Stat(changelogPath); os.IsNotExist(err) {
 		onBoard = true
 		log.Printf("Package '%s' changelog not exist, do onboard process", packagePath)
@@ -112,13 +111,6 @@ func (ctx GenerateContext) GenerateForSingleRPNamespace(generateParam *GenerateP
 		}
 	} else {
 		log.Printf("Package '%s' existed, do update process", packagePath)
-
-		log.Printf("Get ori exports for changelog generation...")
-		oriExports, err = exports.Get(packagePath)
-		if err != nil {
-			log.Printf("Get ori exports error, set to empty: %+v", err)
-			oriExports = exports.Content{}
-		}
 
 		log.Printf("Remove all the files that start with `zz_generated_`...")
 		if err = CleanSDKGeneratedFiles(packagePath); err != nil {
@@ -146,21 +138,41 @@ func (ctx GenerateContext) GenerateForSingleRPNamespace(generateParam *GenerateP
 		return nil, err
 	}
 
+	previousVersion := ""
+	isCurrentPreview := false
+	var oriExports *exports.Content
+	if !onBoard {
+		log.Printf("Get ori exports for changelog generation...")
+
+		tags, err := GetAllVersionTags(generateParam.RPName, generateParam.NamespaceName)
+		if err != nil {
+			return nil, err
+		}
+
+		isCurrentPreview, err = ContainsPreviewAPIVersion(packagePath)
+		if err != nil {
+			return nil, err
+		}
+
+		previousVersionTag := GetPreviousVersionTag(isCurrentPreview, tags)
+
+		oriExports, err = GetExportsFromTag(*ctx.SDKRepo, packagePath, previousVersionTag)
+		if err != nil {
+			return nil, err
+		}
+
+		tagSplit := strings.Split(previousVersionTag, "/")
+		previousVersion = strings.TrimLeft(tagSplit[len(tagSplit)-1], "v")
+	}
+
 	log.Printf("Generate changelog for package...")
 	newExports, err := exports.Get(packagePath)
 	if err != nil {
 		return nil, err
 	}
-	changelog, err := autorest.GetChangelogForPackage(&oriExports, &newExports)
+	changelog, err := autorest.GetChangelogForPackage(oriExports, &newExports)
 	if err != nil {
 		return nil, err
-	}
-
-	if !generateParam.SkipGenerateExample {
-		log.Printf("Generate examples...")
-		if err := ExecuteExampleGenerate(packagePath, filepath.Join("resourcemanager", generateParam.RPName, generateParam.NamespaceName)); err != nil {
-			return nil, err
-		}
 	}
 
 	if onBoard {
@@ -169,8 +181,21 @@ func (ctx GenerateContext) GenerateForSingleRPNamespace(generateParam *GenerateP
 			return nil, err
 		}
 
+		version := "0.1.0"
+		if generateParam.SpecficVersion != "" {
+			log.Printf("Use specfic version: %s", generateParam.SpecficVersion)
+			version = generateParam.SpecficVersion
+		}
+
+		if !generateParam.SkipGenerateExample {
+			log.Printf("Generate examples...")
+			if err := ExecuteExampleGenerate(packagePath, filepath.Join("resourcemanager", generateParam.RPName, generateParam.NamespaceName)); err != nil {
+				return nil, err
+			}
+		}
+
 		return &GenerateResult{
-			Version:        "0.1.0",
+			Version:        version,
 			RPName:         generateParam.RPName,
 			PackageName:    generateParam.NamespaceName,
 			PackageAbsPath: packagePath,
@@ -181,7 +206,7 @@ func (ctx GenerateContext) GenerateForSingleRPNamespace(generateParam *GenerateP
 		log.Printf("Calculate new version...")
 		var version *semver.Version
 		if generateParam.SpecficVersion == "" {
-			version, err = CalculateNewVersion(changelog, packagePath)
+			version, err = CalculateNewVersion(changelog, previousVersion, isCurrentPreview)
 			if err != nil {
 				return nil, err
 			}
@@ -199,9 +224,23 @@ func (ctx GenerateContext) GenerateForSingleRPNamespace(generateParam *GenerateP
 			return nil, err
 		}
 
+		log.Printf("Update module definition if v2+...")
+		err = UpdateModuleDefinition(packagePath, generateParam.RPName, generateParam.NamespaceName, version)
+		if err != nil {
+			return nil, err
+		}
+
 		log.Printf("Replace version in autorest.md and constants...")
 		if err = ReplaceVersion(packagePath, version.String()); err != nil {
 			return nil, err
+		}
+
+		// Example generation should be the last step because the package import relay on the new calculated version
+		if !generateParam.SkipGenerateExample {
+			log.Printf("Generate examples...")
+			if err := ExecuteExampleGenerate(packagePath, filepath.Join("resourcemanager", generateParam.RPName, generateParam.NamespaceName)); err != nil {
+				return nil, err
+			}
 		}
 
 		return &GenerateResult{

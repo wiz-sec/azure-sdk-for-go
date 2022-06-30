@@ -11,6 +11,7 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -32,8 +33,8 @@ const (
 var (
 	v2BeginRegex             = regexp.MustCompile("^```\\s*yaml\\s*\\$\\(go\\)\\s*&&\\s*\\$\\((track2|v2)\\)")
 	v2EndRegex               = regexp.MustCompile("^\\s*```\\s*$")
-	newClientMethodNameRegex = regexp.MustCompile("^New.+Client$")
-	versionLineRegex         = regexp.MustCompile(`version\s*=\s*\".*v\d+\.\d+\.\d+\"`)
+	newClientMethodNameRegex = regexp.MustCompile("^New.*Client$")
+	versionLineRegex         = regexp.MustCompile(`moduleVersion\s*=\s*\".*v\d+\.\d+\.\d+\"`)
 	changelogVersionRegex    = regexp.MustCompile(`##\s*(?P<version>\d+\.\d+\.\d+)\s*\((\d{4}-\d{2}-\d{2}|Unreleased)\)`)
 	packageConfigRegex       = regexp.MustCompile(`\$\((package-.+)\)`)
 )
@@ -233,14 +234,14 @@ func ReplaceVersion(packageRootPath string, newVersion string) error {
 	if b, err = ioutil.ReadFile(path); err != nil {
 		return err
 	}
-	contents := versionLineRegex.ReplaceAllString(string(b), "version = \"v"+newVersion+"\"")
+	contents := versionLineRegex.ReplaceAllString(string(b), "moduleVersion = \"v"+newVersion+"\"")
 
 	return ioutil.WriteFile(path, []byte(contents), 0644)
 }
 
 // calculate new version by changelog using semver package
-func CalculateNewVersion(changelog *model.Changelog, packageRootPath string) (*semver.Version, error) {
-	version, err := GetLatestVersion(packageRootPath)
+func CalculateNewVersion(changelog *model.Changelog, previousVersion string, isCurrentPreview bool) (*semver.Version, error) {
+	version, err := semver.NewVersion(previousVersion)
 	if err != nil {
 		return nil, err
 	}
@@ -255,13 +256,41 @@ func CalculateNewVersion(changelog *model.Changelog, packageRootPath string) (*s
 			newVersion = version.IncPatch()
 		}
 	} else {
-		// release version calculation
-		if changelog.HasBreakingChanges() {
-			newVersion = version.IncMajor()
-		} else if changelog.Modified.HasAdditiveChanges() {
-			newVersion = version.IncMinor()
+		if isCurrentPreview {
+			if strings.Contains(previousVersion, "beta") {
+				betaNumber, err := strconv.Atoi(strings.Split(version.Prerelease(), "beta.")[1])
+				if err != nil {
+					return nil, err
+				}
+				newVersion, err = version.SetPrerelease("beta." + strconv.Itoa(betaNumber+1))
+				if err != nil {
+					return nil, err
+				}
+			} else {
+				if changelog.HasBreakingChanges() {
+					newVersion = version.IncMajor()
+				} else if changelog.Modified.HasAdditiveChanges() {
+					newVersion = version.IncMinor()
+				} else {
+					newVersion = version.IncPatch()
+				}
+				newVersion, err = newVersion.SetPrerelease("beta.1")
+				if err != nil {
+					return nil, err
+				}
+			}
 		} else {
-			newVersion = version.IncPatch()
+			if strings.Contains(previousVersion, "beta") {
+				return nil, fmt.Errorf("must have stable previous version")
+			}
+			// release version calculation
+			if changelog.HasBreakingChanges() {
+				newVersion = version.IncMajor()
+			} else if changelog.Modified.HasAdditiveChanges() {
+				newVersion = version.IncMinor()
+			} else {
+				newVersion = version.IncPatch()
+			}
 		}
 	}
 
@@ -322,4 +351,31 @@ func ReplaceNewClientNamePlaceholder(packageRootPath string, exports exports.Con
 
 	var content = strings.ReplaceAll(string(b), "{{NewClientName}}", clientName)
 	return ioutil.WriteFile(path, []byte(content), 0644)
+}
+
+func UpdateModuleDefinition(packageRootPath, rpName, namespaceName string, version *semver.Version) error {
+	if version.Major() > 1 {
+		path := filepath.Join(packageRootPath, "go.mod")
+
+		b, err := ioutil.ReadFile(path)
+		if err != nil {
+			return fmt.Errorf("cannot parse version from changelog")
+		}
+
+		lines := strings.Split(string(b), "\n")
+		for i, line := range lines {
+			if strings.HasPrefix(line, "module") {
+				line = strings.TrimRight(line, "\r")
+				parts := strings.Split(line, "/")
+				if parts[len(parts)-1] != fmt.Sprintf("v%d", version.Major()) {
+					lines[i] = fmt.Sprintf("module github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/%s/%s/v%d", rpName, namespaceName, version.Major())
+				}
+				break
+			}
+		}
+		if err = ioutil.WriteFile(path, []byte(strings.Join(lines, "\n")), 0644); err != nil {
+			return err
+		}
+	}
+	return nil
 }
