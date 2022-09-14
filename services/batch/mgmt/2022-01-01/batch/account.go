@@ -522,7 +522,9 @@ func (client AccountClient) ListPreparer(ctx context.Context) (*http.Request, er
 		"subscriptionId": autorest.Encode("path", client.SubscriptionID),
 	}
 
-	const APIVersion = "2022-01-01"
+	// Custom patch the API version to support network profiles
+	// Note: this should be removed after it is officially supported
+	const APIVersion = "2022-06-01"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
 	}

@@ -508,6 +508,37 @@ func NewAccountListResultPage(cur AccountListResult, getNextPage func(context.Co
 	}
 }
 
+// AccountAccessActionType is the account access available types
+type AccountAccessActionType string
+
+const (
+	// AccountAccessActionTypeAllow represents allow action
+	AccountAccessActionTypeAllow AccountAccessActionType = "Allow"
+	// AccountAccessActionTypeDeny represents deny action
+	AccountAccessActionTypeDeny AccountAccessActionType = "Deny"
+)
+
+type IPRules struct {
+	// Action is the rule action
+	Action AccountAccessActionType `json:"action,omitempty"`
+	// Value is the rule's IP or cidr
+	Value *string `json:"value,omitempty"`
+}
+
+// AccountAccess returns the IP ranges to allow access from the internet
+type AccountAccess struct {
+	// DefaultAction is the default action of the configured ranges
+	DefaultAction AccountAccessActionType `json:"defaultAction,omitempty"`
+	// IPRules are the configures account access rules
+	IPRules *[]IPRules `json:"ipRules,omitempty"`
+}
+
+// NetworkProfile returns the configured network profile
+type NetworkProfile struct {
+	// AccountAccess represents the IP ranges to allow access from the internet
+	AccountAccess AccountAccess `json:"accountAccess,omitempty"`
+}
+
 // AccountProperties account specific properties.
 type AccountProperties struct {
 	// AccountEndpoint - READ-ONLY; The account endpoint used to interact with the Batch service.
@@ -520,6 +551,8 @@ type AccountProperties struct {
 	KeyVaultReference *KeyVaultReference `json:"keyVaultReference,omitempty"`
 	// PublicNetworkAccess - READ-ONLY; If not specified, the default value is 'enabled'. Possible values include: 'PublicNetworkAccessTypeEnabled', 'PublicNetworkAccessTypeDisabled'
 	PublicNetworkAccess PublicNetworkAccessType `json:"publicNetworkAccess,omitempty"`
+	// NetworkProfile - ** Patched to original sdq to support network profiles **
+	NetworkProfile *NetworkProfile `json:"networkProfile,omitempty"`
 	// PrivateEndpointConnections - READ-ONLY; List of private endpoint connections associated with the Batch account
 	PrivateEndpointConnections *[]PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
 	// AutoStorage - READ-ONLY
