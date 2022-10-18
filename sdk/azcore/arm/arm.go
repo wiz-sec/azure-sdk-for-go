@@ -21,4 +21,8 @@ func init() {
 		Audience: "https://management.core.windows.net/",
 		Endpoint: "https://management.azure.com",
 	}
+	cloud.AzureGermany.Services[cloud.ResourceManager] = cloud.ServiceConfiguration{
+		Audience: "https://management.core.cloudapi.de/",
+		Endpoint: "https://management.microsoftazure.de",
+	}
 }

@@ -19,6 +19,10 @@ var (
 	AzurePublic = Configuration{
 		ActiveDirectoryAuthorityHost: "https://login.microsoftonline.com/", Services: map[ServiceName]ServiceConfiguration{},
 	}
+	// AzureGermany contains configuration for Azure Germany Cloud.
+	AzureGermany = Configuration{
+		ActiveDirectoryAuthorityHost: "https://login.microsoftonline.de/", Services: map[ServiceName]ServiceConfiguration{},
+	}
 )
 
 // ServiceName identifies a cloud service.
