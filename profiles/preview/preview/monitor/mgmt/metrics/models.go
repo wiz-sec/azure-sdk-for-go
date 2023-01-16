@@ -18,12 +18,12 @@ const (
 type AggregationType = original.AggregationType
 
 const (
-	AggregationTypeAverage AggregationType = original.AggregationTypeAverage
-	AggregationTypeCount   AggregationType = original.AggregationTypeCount
-	AggregationTypeMaximum AggregationType = original.AggregationTypeMaximum
-	AggregationTypeMinimum AggregationType = original.AggregationTypeMinimum
-	AggregationTypeNone    AggregationType = original.AggregationTypeNone
-	AggregationTypeTotal   AggregationType = original.AggregationTypeTotal
+	Average AggregationType = original.Average
+	Count   AggregationType = original.Count
+	Maximum AggregationType = original.Maximum
+	Minimum AggregationType = original.Minimum
+	None    AggregationType = original.None
+	Total   AggregationType = original.Total
 )
 
 type AggregationTypeEnum = original.AggregationTypeEnum
@@ -39,9 +39,9 @@ const (
 type BaselineSensitivity = original.BaselineSensitivity
 
 const (
-	BaselineSensitivityHigh   BaselineSensitivity = original.BaselineSensitivityHigh
-	BaselineSensitivityLow    BaselineSensitivity = original.BaselineSensitivityLow
-	BaselineSensitivityMedium BaselineSensitivity = original.BaselineSensitivityMedium
+	High   BaselineSensitivity = original.High
+	Low    BaselineSensitivity = original.Low
+	Medium BaselineSensitivity = original.Medium
 )
 
 type CriterionType = original.CriterionType
@@ -55,9 +55,9 @@ const (
 type DynamicThresholdOperator = original.DynamicThresholdOperator
 
 const (
-	DynamicThresholdOperatorGreaterOrLessThan DynamicThresholdOperator = original.DynamicThresholdOperatorGreaterOrLessThan
-	DynamicThresholdOperatorGreaterThan       DynamicThresholdOperator = original.DynamicThresholdOperatorGreaterThan
-	DynamicThresholdOperatorLessThan          DynamicThresholdOperator = original.DynamicThresholdOperatorLessThan
+	GreaterOrLessThan DynamicThresholdOperator = original.GreaterOrLessThan
+	GreaterThan       DynamicThresholdOperator = original.GreaterThan
+	LessThan          DynamicThresholdOperator = original.LessThan
 )
 
 type DynamicThresholdSensitivity = original.DynamicThresholdSensitivity
@@ -92,8 +92,8 @@ const (
 type MetricResultType = original.MetricResultType
 
 const (
-	MetricResultTypeData     MetricResultType = original.MetricResultTypeData
-	MetricResultTypeMetadata MetricResultType = original.MetricResultTypeMetadata
+	Data     MetricResultType = original.Data
+	Metadata MetricResultType = original.Metadata
 )
 
 type MetricUnit = original.MetricUnit
@@ -117,9 +117,9 @@ const (
 type NamespaceClassification = original.NamespaceClassification
 
 const (
-	NamespaceClassificationCustom   NamespaceClassification = original.NamespaceClassificationCustom
-	NamespaceClassificationPlatform NamespaceClassification = original.NamespaceClassificationPlatform
-	NamespaceClassificationQos      NamespaceClassification = original.NamespaceClassificationQos
+	Custom   NamespaceClassification = original.Custom
+	Platform NamespaceClassification = original.Platform
+	Qos      NamespaceClassification = original.Qos
 )
 
 type OdataType = original.OdataType

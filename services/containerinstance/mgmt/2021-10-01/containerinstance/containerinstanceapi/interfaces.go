@@ -1,3 +1,4 @@
+// Deprecated: Please note, this package has been deprecated. A replacement package is available [github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/containerinstance/armcontainerinstance](https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/containerinstance/armcontainerinstance). We strongly encourage you to upgrade to continue receiving updates. See [Migration Guide](https://aka.ms/azsdk/golang/t2/migration) for guidance on upgrading. Refer to our [deprecation policy](https://azure.github.io/azure-sdk/policies_support.html) for more details.
 package containerinstanceapi
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
@@ -57,3 +58,10 @@ type ContainersClientAPI interface {
 }
 
 var _ ContainersClientAPI = (*containerinstance.ContainersClient)(nil)
+
+// SubnetServiceAssociationLinkClientAPI contains the set of methods on the SubnetServiceAssociationLinkClient type.
+type SubnetServiceAssociationLinkClientAPI interface {
+	Delete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string) (result containerinstance.SubnetServiceAssociationLinkDeleteFuture, err error)
+}
+
+var _ SubnetServiceAssociationLinkClientAPI = (*containerinstance.SubnetServiceAssociationLinkClient)(nil)

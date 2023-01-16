@@ -18,17 +18,17 @@ const (
 type ConditionOperator = original.ConditionOperator
 
 const (
-	ConditionOperatorGreaterThan        ConditionOperator = original.ConditionOperatorGreaterThan
-	ConditionOperatorGreaterThanOrEqual ConditionOperator = original.ConditionOperatorGreaterThanOrEqual
-	ConditionOperatorLessThan           ConditionOperator = original.ConditionOperatorLessThan
-	ConditionOperatorLessThanOrEqual    ConditionOperator = original.ConditionOperatorLessThanOrEqual
+	GreaterThan        ConditionOperator = original.GreaterThan
+	GreaterThanOrEqual ConditionOperator = original.GreaterThanOrEqual
+	LessThan           ConditionOperator = original.LessThan
+	LessThanOrEqual    ConditionOperator = original.LessThanOrEqual
 )
 
 type DataStatus = original.DataStatus
 
 const (
-	DataStatusNotPresent DataStatus = original.DataStatusNotPresent
-	DataStatusPresent    DataStatus = original.DataStatusPresent
+	NotPresent DataStatus = original.NotPresent
+	Present    DataStatus = original.Present
 )
 
 type OdataType = original.OdataType
@@ -42,36 +42,36 @@ const (
 type OdataTypeBasicRuleAction = original.OdataTypeBasicRuleAction
 
 const (
-	OdataTypeBasicRuleActionOdataTypeMicrosoftAzureManagementInsightsModelsRuleEmailAction   OdataTypeBasicRuleAction = original.OdataTypeBasicRuleActionOdataTypeMicrosoftAzureManagementInsightsModelsRuleEmailAction
-	OdataTypeBasicRuleActionOdataTypeMicrosoftAzureManagementInsightsModelsRuleWebhookAction OdataTypeBasicRuleAction = original.OdataTypeBasicRuleActionOdataTypeMicrosoftAzureManagementInsightsModelsRuleWebhookAction
-	OdataTypeBasicRuleActionOdataTypeRuleAction                                              OdataTypeBasicRuleAction = original.OdataTypeBasicRuleActionOdataTypeRuleAction
+	OdataTypeMicrosoftAzureManagementInsightsModelsRuleEmailAction   OdataTypeBasicRuleAction = original.OdataTypeMicrosoftAzureManagementInsightsModelsRuleEmailAction
+	OdataTypeMicrosoftAzureManagementInsightsModelsRuleWebhookAction OdataTypeBasicRuleAction = original.OdataTypeMicrosoftAzureManagementInsightsModelsRuleWebhookAction
+	OdataTypeRuleAction                                              OdataTypeBasicRuleAction = original.OdataTypeRuleAction
 )
 
 type OdataTypeBasicRuleCondition = original.OdataTypeBasicRuleCondition
 
 const (
-	OdataTypeBasicRuleConditionOdataTypeMicrosoftAzureManagementInsightsModelsLocationThresholdRuleCondition OdataTypeBasicRuleCondition = original.OdataTypeBasicRuleConditionOdataTypeMicrosoftAzureManagementInsightsModelsLocationThresholdRuleCondition
-	OdataTypeBasicRuleConditionOdataTypeMicrosoftAzureManagementInsightsModelsManagementEventRuleCondition   OdataTypeBasicRuleCondition = original.OdataTypeBasicRuleConditionOdataTypeMicrosoftAzureManagementInsightsModelsManagementEventRuleCondition
-	OdataTypeBasicRuleConditionOdataTypeMicrosoftAzureManagementInsightsModelsThresholdRuleCondition         OdataTypeBasicRuleCondition = original.OdataTypeBasicRuleConditionOdataTypeMicrosoftAzureManagementInsightsModelsThresholdRuleCondition
-	OdataTypeBasicRuleConditionOdataTypeRuleCondition                                                        OdataTypeBasicRuleCondition = original.OdataTypeBasicRuleConditionOdataTypeRuleCondition
+	OdataTypeMicrosoftAzureManagementInsightsModelsLocationThresholdRuleCondition OdataTypeBasicRuleCondition = original.OdataTypeMicrosoftAzureManagementInsightsModelsLocationThresholdRuleCondition
+	OdataTypeMicrosoftAzureManagementInsightsModelsManagementEventRuleCondition   OdataTypeBasicRuleCondition = original.OdataTypeMicrosoftAzureManagementInsightsModelsManagementEventRuleCondition
+	OdataTypeMicrosoftAzureManagementInsightsModelsThresholdRuleCondition         OdataTypeBasicRuleCondition = original.OdataTypeMicrosoftAzureManagementInsightsModelsThresholdRuleCondition
+	OdataTypeRuleCondition                                                        OdataTypeBasicRuleCondition = original.OdataTypeRuleCondition
 )
 
 type OnboardingStatus = original.OnboardingStatus
 
 const (
-	OnboardingStatusNotOnboarded OnboardingStatus = original.OnboardingStatusNotOnboarded
-	OnboardingStatusOnboarded    OnboardingStatus = original.OnboardingStatusOnboarded
-	OnboardingStatusUnknown      OnboardingStatus = original.OnboardingStatusUnknown
+	NotOnboarded OnboardingStatus = original.NotOnboarded
+	Onboarded    OnboardingStatus = original.Onboarded
+	Unknown      OnboardingStatus = original.Unknown
 )
 
 type TimeAggregationOperator = original.TimeAggregationOperator
 
 const (
-	TimeAggregationOperatorAverage TimeAggregationOperator = original.TimeAggregationOperatorAverage
-	TimeAggregationOperatorLast    TimeAggregationOperator = original.TimeAggregationOperatorLast
-	TimeAggregationOperatorMaximum TimeAggregationOperator = original.TimeAggregationOperatorMaximum
-	TimeAggregationOperatorMinimum TimeAggregationOperator = original.TimeAggregationOperatorMinimum
-	TimeAggregationOperatorTotal   TimeAggregationOperator = original.TimeAggregationOperatorTotal
+	Average TimeAggregationOperator = original.Average
+	Last    TimeAggregationOperator = original.Last
+	Maximum TimeAggregationOperator = original.Maximum
+	Minimum TimeAggregationOperator = original.Minimum
+	Total   TimeAggregationOperator = original.Total
 )
 
 type AlertRule = original.AlertRule

@@ -22,70 +22,70 @@ const (
 type AccessMode = original.AccessMode
 
 const (
-	AccessModeOpen        AccessMode = original.AccessModeOpen
-	AccessModePrivateOnly AccessMode = original.AccessModePrivateOnly
+	Open        AccessMode = original.Open
+	PrivateOnly AccessMode = original.PrivateOnly
 )
 
 type CategoryType = original.CategoryType
 
 const (
-	CategoryTypeLogs    CategoryType = original.CategoryTypeLogs
-	CategoryTypeMetrics CategoryType = original.CategoryTypeMetrics
+	Logs    CategoryType = original.Logs
+	Metrics CategoryType = original.Metrics
 )
 
 type ComparisonOperationType = original.ComparisonOperationType
 
 const (
-	ComparisonOperationTypeEquals             ComparisonOperationType = original.ComparisonOperationTypeEquals
-	ComparisonOperationTypeGreaterThan        ComparisonOperationType = original.ComparisonOperationTypeGreaterThan
-	ComparisonOperationTypeGreaterThanOrEqual ComparisonOperationType = original.ComparisonOperationTypeGreaterThanOrEqual
-	ComparisonOperationTypeLessThan           ComparisonOperationType = original.ComparisonOperationTypeLessThan
-	ComparisonOperationTypeLessThanOrEqual    ComparisonOperationType = original.ComparisonOperationTypeLessThanOrEqual
-	ComparisonOperationTypeNotEquals          ComparisonOperationType = original.ComparisonOperationTypeNotEquals
+	Equals             ComparisonOperationType = original.Equals
+	GreaterThan        ComparisonOperationType = original.GreaterThan
+	GreaterThanOrEqual ComparisonOperationType = original.GreaterThanOrEqual
+	LessThan           ComparisonOperationType = original.LessThan
+	LessThanOrEqual    ComparisonOperationType = original.LessThanOrEqual
+	NotEquals          ComparisonOperationType = original.NotEquals
 )
 
 type CreatedByType = original.CreatedByType
 
 const (
-	CreatedByTypeApplication     CreatedByType = original.CreatedByTypeApplication
-	CreatedByTypeKey             CreatedByType = original.CreatedByTypeKey
-	CreatedByTypeManagedIdentity CreatedByType = original.CreatedByTypeManagedIdentity
-	CreatedByTypeUser            CreatedByType = original.CreatedByTypeUser
+	Application     CreatedByType = original.Application
+	Key             CreatedByType = original.Key
+	ManagedIdentity CreatedByType = original.ManagedIdentity
+	User            CreatedByType = original.User
 )
 
 type MetricStatisticType = original.MetricStatisticType
 
 const (
-	MetricStatisticTypeAverage MetricStatisticType = original.MetricStatisticTypeAverage
-	MetricStatisticTypeCount   MetricStatisticType = original.MetricStatisticTypeCount
-	MetricStatisticTypeMax     MetricStatisticType = original.MetricStatisticTypeMax
-	MetricStatisticTypeMin     MetricStatisticType = original.MetricStatisticTypeMin
-	MetricStatisticTypeSum     MetricStatisticType = original.MetricStatisticTypeSum
+	Average MetricStatisticType = original.Average
+	Count   MetricStatisticType = original.Count
+	Max     MetricStatisticType = original.Max
+	Min     MetricStatisticType = original.Min
+	Sum     MetricStatisticType = original.Sum
 )
 
 type PredictiveAutoscalePolicyScaleMode = original.PredictiveAutoscalePolicyScaleMode
 
 const (
-	PredictiveAutoscalePolicyScaleModeDisabled     PredictiveAutoscalePolicyScaleMode = original.PredictiveAutoscalePolicyScaleModeDisabled
-	PredictiveAutoscalePolicyScaleModeEnabled      PredictiveAutoscalePolicyScaleMode = original.PredictiveAutoscalePolicyScaleModeEnabled
-	PredictiveAutoscalePolicyScaleModeForecastOnly PredictiveAutoscalePolicyScaleMode = original.PredictiveAutoscalePolicyScaleModeForecastOnly
+	Disabled     PredictiveAutoscalePolicyScaleMode = original.Disabled
+	Enabled      PredictiveAutoscalePolicyScaleMode = original.Enabled
+	ForecastOnly PredictiveAutoscalePolicyScaleMode = original.ForecastOnly
 )
 
 type PrivateEndpointConnectionProvisioningState = original.PrivateEndpointConnectionProvisioningState
 
 const (
-	PrivateEndpointConnectionProvisioningStateCreating  PrivateEndpointConnectionProvisioningState = original.PrivateEndpointConnectionProvisioningStateCreating
-	PrivateEndpointConnectionProvisioningStateDeleting  PrivateEndpointConnectionProvisioningState = original.PrivateEndpointConnectionProvisioningStateDeleting
-	PrivateEndpointConnectionProvisioningStateFailed    PrivateEndpointConnectionProvisioningState = original.PrivateEndpointConnectionProvisioningStateFailed
-	PrivateEndpointConnectionProvisioningStateSucceeded PrivateEndpointConnectionProvisioningState = original.PrivateEndpointConnectionProvisioningStateSucceeded
+	Creating  PrivateEndpointConnectionProvisioningState = original.Creating
+	Deleting  PrivateEndpointConnectionProvisioningState = original.Deleting
+	Failed    PrivateEndpointConnectionProvisioningState = original.Failed
+	Succeeded PrivateEndpointConnectionProvisioningState = original.Succeeded
 )
 
 type PrivateEndpointServiceConnectionStatus = original.PrivateEndpointServiceConnectionStatus
 
 const (
-	PrivateEndpointServiceConnectionStatusApproved PrivateEndpointServiceConnectionStatus = original.PrivateEndpointServiceConnectionStatusApproved
-	PrivateEndpointServiceConnectionStatusPending  PrivateEndpointServiceConnectionStatus = original.PrivateEndpointServiceConnectionStatusPending
-	PrivateEndpointServiceConnectionStatusRejected PrivateEndpointServiceConnectionStatus = original.PrivateEndpointServiceConnectionStatusRejected
+	Approved PrivateEndpointServiceConnectionStatus = original.Approved
+	Pending  PrivateEndpointServiceConnectionStatus = original.Pending
+	Rejected PrivateEndpointServiceConnectionStatus = original.Rejected
 )
 
 type ReceiverStatus = original.ReceiverStatus
@@ -99,14 +99,14 @@ const (
 type RecurrenceFrequency = original.RecurrenceFrequency
 
 const (
-	RecurrenceFrequencyDay    RecurrenceFrequency = original.RecurrenceFrequencyDay
-	RecurrenceFrequencyHour   RecurrenceFrequency = original.RecurrenceFrequencyHour
-	RecurrenceFrequencyMinute RecurrenceFrequency = original.RecurrenceFrequencyMinute
-	RecurrenceFrequencyMonth  RecurrenceFrequency = original.RecurrenceFrequencyMonth
-	RecurrenceFrequencyNone   RecurrenceFrequency = original.RecurrenceFrequencyNone
-	RecurrenceFrequencySecond RecurrenceFrequency = original.RecurrenceFrequencySecond
-	RecurrenceFrequencyWeek   RecurrenceFrequency = original.RecurrenceFrequencyWeek
-	RecurrenceFrequencyYear   RecurrenceFrequency = original.RecurrenceFrequencyYear
+	Day    RecurrenceFrequency = original.Day
+	Hour   RecurrenceFrequency = original.Hour
+	Minute RecurrenceFrequency = original.Minute
+	Month  RecurrenceFrequency = original.Month
+	None   RecurrenceFrequency = original.None
+	Second RecurrenceFrequency = original.Second
+	Week   RecurrenceFrequency = original.Week
+	Year   RecurrenceFrequency = original.Year
 )
 
 type ScaleDirection = original.ScaleDirection
@@ -127,10 +127,10 @@ const (
 type ScaleType = original.ScaleType
 
 const (
-	ScaleTypeChangeCount             ScaleType = original.ScaleTypeChangeCount
-	ScaleTypeExactCount              ScaleType = original.ScaleTypeExactCount
-	ScaleTypePercentChangeCount      ScaleType = original.ScaleTypePercentChangeCount
-	ScaleTypeServiceAllowedNextValue ScaleType = original.ScaleTypeServiceAllowedNextValue
+	ChangeCount             ScaleType = original.ChangeCount
+	ExactCount              ScaleType = original.ExactCount
+	PercentChangeCount      ScaleType = original.PercentChangeCount
+	ServiceAllowedNextValue ScaleType = original.ServiceAllowedNextValue
 )
 
 type TimeAggregationType = original.TimeAggregationType
@@ -153,6 +153,8 @@ type ActionGroupPatch = original.ActionGroupPatch
 type ActionGroupPatchBody = original.ActionGroupPatchBody
 type ActionGroupResource = original.ActionGroupResource
 type ActionGroupsClient = original.ActionGroupsClient
+type ActionGroupsCreateNotificationsAtActionGroupResourceLevelFuture = original.ActionGroupsCreateNotificationsAtActionGroupResourceLevelFuture
+type ActionGroupsCreateNotificationsAtResourceGroupLevelFuture = original.ActionGroupsCreateNotificationsAtResourceGroupLevelFuture
 type ActionGroupsPostTestNotificationsFuture = original.ActionGroupsPostTestNotificationsFuture
 type ArmRoleReceiver = original.ArmRoleReceiver
 type AutomationRunbookReceiver = original.AutomationRunbookReceiver
@@ -251,7 +253,6 @@ type SubscriptionLogSettings = original.SubscriptionLogSettings
 type SystemData = original.SystemData
 type TagsResource = original.TagsResource
 type TestNotificationDetailsResponse = original.TestNotificationDetailsResponse
-type TestNotificationResponse = original.TestNotificationResponse
 type TimeWindow = original.TimeWindow
 type TrackedResource = original.TrackedResource
 type VoiceReceiver = original.VoiceReceiver
