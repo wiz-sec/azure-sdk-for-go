@@ -23,7 +23,7 @@ require (
 	nhooyr.io/websocket v1.8.6
 )
 
-require golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4
+require golang.org/x/net v0.23.0
 
 require (
 	code.cloudfoundry.org/clock v0.0.0-20180518195852-02e53af36e6c // indirect
